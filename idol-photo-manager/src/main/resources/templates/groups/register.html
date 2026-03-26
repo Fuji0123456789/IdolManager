@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: header('グループ登録')}"></head>
+<body>
+    <div th:replace="~{layout :: navbar}"></div>
+
+    <div class="container">
+        <h1>🆕 新規グループ登録</h1>
+        <form th:action="@{/groups/register}" method="post">
+            <div class="form-group">
+                <label>グループ名:</label>
+                <input type="text" name="groupName" required placeholder="例：乃木坂46">
+            </div>
+            <button type="submit">登録する</button>
+        </form>
+
+        <a class="back-link" th:href="@{/media/list}">← 一覧画面に戻る</a>
+    </div>
+</body>
+</html>

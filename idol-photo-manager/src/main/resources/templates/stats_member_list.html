@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>メンバー別統計</title>
+</head>
+<body>
+    <h1>メンバーごとの動画像件数</h1>
+    
+    <table border="1">
+        <thead>
+            <tr>
+                <th>メンバー名</th>
+                <th>総動画像数</th>
+                <th>詳細</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="stat : ${memberStats}">
+                <td th:text="${stat.name}">メンバー名</td>
+                <td th:text="${stat.count}">0</td>
+                <td>
+                    <!-- メンバーIDを取得して詳細画面へ（stat['memberId']が必要なため、RepoのQueryを調整推奨） -->
+                    <a th:href="@{/statistics/member/{id}/cheki(id=${stat.id})}">チェキ枚数を確認</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <p><a th:href="@{/media/list}">一覧画面に戻る</a></p>
+</body>
+</html>

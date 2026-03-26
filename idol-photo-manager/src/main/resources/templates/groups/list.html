@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>アイドルグループ一覧</title>
+</head>
+<body>
+	<div>
+	    <a th:href="@{/media/list}">動画像一覧に戻る</a> | 
+	    <a th:href="@{/groups/register}">新規グループ登録</a>
+	</div>
+    <h1>グループ一覧</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>グループ名</th>
+            </tr>
+        </thead>
+        <tbody>
+			<!-- list.html の <tbody> 部分を修正 -->
+			<tr th:each="group : ${groups}">
+			    <td th:text="${group.groupId}">1</td>
+			    <td th:text="${group.groupName}">グループ名</td>
+			    <td>
+			        <!-- 削除ボタン（誤操作防止のため簡易的な確認ダイアログ付き） -->
+			        <form th:action="@{/groups/delete/{id}(id=${group.groupId})}" method="post" 
+			              onsubmit="return confirm('本当に削除しますか？');" style="display:inline;">
+			            <button type="submit">削除</button>
+			        </form>
+			    </td>
+			</tr>
+        </tbody>
+    </table>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>メンバー一覧</title>
+    <style>
+        table { border-collapse: collapse; width: 80%; margin-top: 10px; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+        th { background-color: #f4f4f4; }
+        .btn { text-decoration: none; padding: 5px 10px; border: 1px solid #666; color: #000; background: #eee; border-radius: 3px; font-size: 0.9em; }
+        .btn-delete { background: #ffcccc; color: #cc0000; border-color: #cc0000; cursor: pointer; }
+        .nav { margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+    <div class="nav">
+        <a th:href="@{/media/list}" class="btn" style="margin-left: 10px;">動画像一覧に戻る</a>
+        <a th:href="@{/members/register}" class="btn">新規メンバー登録</a>
+    </div>
+
+    <h1>メンバー一覧</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>名前</th>
+                <th>所属グループ</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="member : ${members}">
+                <td th:text="${member.memberId}">1</td>
+                <td th:text="${member.memberName}">名前</td>
+                <!-- グループが設定されている場合のみ名前を表示 -->
+                <td th:text="${member.group != null ? member.group.groupName : '未所属'}">グループ名</td>
+                <td>
+                    <!-- 削除ボタン -->
+                    <form th:action="@{/members/delete/{id}(id=${member.memberId})}" method="post" 
+                          onsubmit="return confirm('このメンバーを削除しますか？');" style="display:inline;">
+                        <button type="submit" class="btn btn-delete">削除</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div th:if="${#lists.isEmpty(members)}" style="margin-top: 20px;">
+        <p>登録されているメンバーはいません。</p>
+    </div>
+</body>
+</html>

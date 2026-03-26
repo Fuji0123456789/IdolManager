@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="header(title)">
+    <meta charset="UTF-8">
+    <title th:text="${title}">アイドル管理システム</title>
+    <style>
+        body { font-family: sans-serif; margin: 20px; line-height: 1.6; background-color: #f9f9f9; }
+        nav { background: #333; padding: 10px; margin-bottom: 20px; border-radius: 5px; }
+        nav a { color: white; margin-right: 15px; text-decoration: none; font-weight: bold; }
+        nav a:hover { text-decoration: underline; }
+        .container { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .form-group { margin-bottom: 15px; }
+        input[type="text"], select { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; }
+        button { background: #007bff; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; }
+        button:hover { background: #0056b3; }
+        .back-link { display: block; margin-top: 20px; color: #666; }
+    </style>
+</head>
+<body>
+    <nav th:fragment="navbar">
+        <a th:href="@{/dashboard}">🏠 ダッシュボード</a>
+        <a th:href="@{/media/list}">🎞 動画像一覧</a>
+        <a th:href="@{/statistics/members}">📊 統計</a>
+        <form th:action="@{/logout}" method="post" style="display:inline; float:right;">
+            <button type="submit" style="background:none; border:none; color:white; padding:0; cursor:pointer;">ログアウト</button>
+        </form>
+    </nav>
+</body>
+</html>

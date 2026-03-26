@@ -1,0 +1,32 @@
+<!--
+	ダッシュボード
+-->
+<!--
+	templatesフォルダ: Spring Boot（Thymeleaf）が自動的にHTMLを探しに行く特別なフォルダです。
+-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ダッシュボード</title>
+</head>
+<body>
+    <h1>アイドル動画像管理システム</h1>
+    
+    <div>
+        <h2>未登録ファイルの状態</h2>
+        <p>現在、未登録の動画像が <strong th:text="${unregisteredCount}">0</strong> 件あります。</p>
+        <!--
+			th:text: コントローラーの model.addAttribute("unregisteredCount", ...) でセットした値を画面に埋め込みます。
+		-->
+        
+        <!-- 未登録があれば登録ボタンを表示 -->
+        <form th:action="@{/media/register-and-list}" method="post">
+            <button type="submit">未登録分をDBに保存して一覧画面へ</button>
+        </form>
+    </div>
+
+    <hr>
+    <a th:href="@{/media/list}">登録済み動画像の一覧を見る</a>
+</body>
+</html>

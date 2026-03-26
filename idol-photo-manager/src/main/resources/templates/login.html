@@ -1,0 +1,19 @@
+<!--
+	ログイン画面
+-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><title>ログイン</title></head>
+<body>
+    <h1>アイドル管理システム ログイン</h1>
+    <div th:if="${param.error}" style="color:red;">ユーザ名かパスワードが違います</div>
+    
+    <form th:action="@{/login}" method="post">
+        <div>ユーザ名: <input type="text" name="username"></div>
+        <div>パスワード: <input type="password" name="password"></div>
+        <button type="submit">ログイン</button>
+    </form>
+    <hr>
+    <a th:href="@{/register}">新規ユーザ登録はこちら</a>
+</body>
+</html>

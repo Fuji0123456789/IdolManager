@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>動画像一覧</title>
+</head>
+<body>
+	<div>
+	    <a th:href="@{/groups/list}" class="btn" <!--style="margin-left: 20px;"-->アイドルグループ管理</a> |
+	    <a th:href="@{/members/list}" class="btn" <!--style="margin-left: 10px;"-->メンバー管理</a> |
+	</div>
+    <div>
+        <a th:href="@{/groups/register}">アイドルグループ登録</a> |
+        <a th:href="@{/members/register}">メンバー登録</a> |
+        <a th:href="@{/locations/register}">場所登録</a> |
+        <a th:href="@{/events/register}">イベント登録</a> |
+        <a th:href="@{/types/register}">種別登録</a> |
+	    <a th:href="@{/media/register}" class="btn">新規動画像登録</a>
+    </div>
+    <hr>
+	<!--
+		ドリルダウンへの導線: totalCount をクリックしてメンバー別集計へ飛ばすリンクも忘れずに追加してください。
+	-->
+    <h1>動画像一覧（全 [[${totalCount}]] 件）</h1>
+    <!--
+		要件にある「件数をクリックすれば遷移」を、一覧画面の件数表示部分に追加します。
+	-->
+	<h2>
+	    これまで取得した動画像：
+	    <a th:href="@{/statistics/members}" th:text="${totalCount}" style="cursor:pointer;">0</a> 件
+	</h2>
+    
+    <table border="1">
+        <tr>
+            <th>ファイル</th>
+            <th>詳細入力</th>
+            <th>メンバー (複数選択可)</th>
+            <th>操作</th>
+        </tr>
+        <tr th:each="media : ${mediaList}">
+            <td>
+                <span th:text="${media.filePath}">パス</span>
+                <!-- ローカル画像表示設定が済んでいれば <img> を置く -->
+            </td>
+            <td>
+                <form th:action="@{/media/update}" method="post">
+                    <input type="hidden" name="mediaId" th:value="${media.mediaId}">
+                    
+                    日付: <input type="date" name="acquiredDate" th:value="${media.acquiredDate}"><br>
+                    
+                    場所: <select name="locationId">
+						<!--
+							Thymeleafの?.演算子: media.location?.locationId と書くことで、場所がまだ未登録（null）の場合のエラーを防いでいます。
+						-->
+                        <option th:each="loc : ${locations}"
+                                th:value="${loc.locationId}" th:text="${loc.locationName}" 
+                                th:selected="${media.location?.locationId == loc.locationId}"></option>
+                    </select><br>
+                    
+                    イベント: <select name="eventId">
+						<!--
+							Thymeleafの?.演算子: media.location?.eventId と書くことで、場所がまだ未登録（null）の場合のエラーを防いでいます。
+						-->
+                        <option th:each="ev : ${events}"
+                                th:value="${ev.eventId}" th:text="${ev.eventName}" 
+                                th:selected="${media.event?.eventId == ev.eventId}"></option>
+                    </select><br>
+                    
+                    種別: <select name="typeId">
+                        <option th:each="t : ${types}" th:value="${t.typeId}" 
+                                th:text="${t.typeName}" th:selected="${media.type?.typeId == t.typeId}"></option>
+                    </select><br>
+            </td>
+            <td>
+                    <!--
+						multiple: select タグに multiple を付けることで、複数人のアイドルを同時に選択できます。
+					-->
+                    <select name="memberIds" multiple size="6">
+                        <option th:each="mem : ${members}" th:value="${mem.memberId}" 
+                                th:text="${mem.memberName}" 
+                                th:selected="${media.members.contains(mem)}"></option>
+                    </select>
+            </td>
+            <td>
+                    <button type="submit">保存</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

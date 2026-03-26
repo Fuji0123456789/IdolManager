@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>チェキ統計詳細</title>
+</head>
+<body>
+    <h1 th:text="|${memberName} さんの統計|">アイドル名の統計</h1>
+    
+    <div style="border: 2px solid #ccc; padding: 20px; text-align: center; width: 300px;">
+        <h2>チェキの総枚数</h2>
+        <p style="font-size: 3em; color: #ff4081;" th:text="${chekiCount}">0</p>
+        <p>枚</p>
+    </div>
+    
+    <p><a th:href="@{/statistics/members}">メンバー別一覧に戻る</a></p>
+</body>
+</html>
